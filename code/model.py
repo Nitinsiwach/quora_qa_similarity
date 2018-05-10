@@ -182,14 +182,11 @@ class QSystem(object):
         print(predictions.shape,gold.shape)
 #         print(predictions[:10] == gold[:10] )
         correct = predictions == gold
-        print(correct)
         accuracy = np.sum(correct)/gold.shape
         
         
         if log:
             logging.info("accuracy: {}".format(accuracy))
-        if mode == 'test':
-            return accuracy, predictions
         return accuracy
     
     
@@ -273,13 +270,12 @@ class QSystem(object):
             logging.info("Epoch %d out of %d", epoch + 1, epochs)
             logging.info("Best score so far: " + str(best_score))
             loss = self.run_epoch(dataset_train, session)
-#             print(len(dataset_train[0]),len(dataset_train[1]),len(dataset_train[2]))
-#             accuracy = self.evaluate_answer(session, dataset_train, log=True)
+            accuracy = self.evaluate_answer(session, dataset_train, log=True)
             logging.info("loss: " + str(loss) + " accuracy: "+str(accuracy))
-#             if accuracy > best_score:
-#                 best_score = accuracy
-#                 logging.info("New best score! Saving model in %s", results_path)
-#                 self.saver.save(session, results_path)    
+            if accuracy > best_score:
+                best_score = accuracy
+                logging.info("New best score! Saving model in %s", results_path)
+                self.saver.save(session, results_path)    
             print("")
 
         return best_score
