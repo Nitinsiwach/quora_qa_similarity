@@ -33,7 +33,7 @@ class _FLAGS():
         self.optimizer = "adam"
         self.vocab_path = "data/quora/vocab.dat"
         self.max_sent_len = 70
-        self.mode = 'test'
+        self.mode = 'train'
 FLAGS = _FLAGS()
 
 def initialize_model(session, model, train_dir):
