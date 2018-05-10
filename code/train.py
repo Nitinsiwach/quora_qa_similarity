@@ -16,10 +16,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--test", default = False, type = bool)
-args = parser.parse_args()
-
 
 class _FLAGS():
     def __init__(self):
