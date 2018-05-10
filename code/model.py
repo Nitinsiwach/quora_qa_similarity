@@ -58,7 +58,6 @@ class Encoder():
                                                                   parallel_iterations = 256)
             output_lstm = tf.concat([output[0], output[1]], axis = -1)
             final_state_lstm = tf.concat([final_state[0], final_state[1]], axis = -1)
-            print(output_lstm)
             return output_lstm, final_state_lstm
     
     

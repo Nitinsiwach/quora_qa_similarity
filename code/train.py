@@ -126,7 +126,8 @@ def main():
             
             qsystem.train(sess, dataset, FLAGS.max_sent_len, FLAGS.epochs, save_train_dir, test = args.test)
             accuracy = qa.evaluate_answer(sess, dataset_train, log=True)
-        if Flags.mode == 'test':
+        if FLAGS.mode == 'test':
+            print("running in test mode")
             with open("data/quora"+"/.ids.test.question1", encoding = 'utf8') as tq1, \
                 open("data/quora"+"/.ids.test.question2", encoding = 'utf8') as tq2:
                     tq1 = tq1.readlines()
@@ -134,7 +135,7 @@ def main():
             tq1 = [[int(i) for i in j.replace("\n", "").split()] for j in tq1]
             tq2 = [[int(i) for i in j.replace("\n", "").split()] for j in tq2]
             prediction_dataset = [tq1, tq2]
-            predictions = qa.predict(sess, prediction_dataset, mode = 'test')
+            predictions = qsystem.predict(sess, prediction_dataset, mode = 'test')
             with open("results_test.txt", 'w', encoding = 'utf-8') as f:
                 f.write(predictions)
 
