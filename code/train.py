@@ -32,7 +32,7 @@ class _FLAGS():
         self.log_dir = "log"
         self.optimizer = "adam"
         self.vocab_path = "data/quora/vocab.dat"
-        self.max_sent_len = 40
+        self.max_sent_len = 70
         self.mode = 'test'
 FLAGS = _FLAGS()
 
