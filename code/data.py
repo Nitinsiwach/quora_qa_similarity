@@ -240,28 +240,31 @@ if __name__ == '__main__':
     
     split = args.split
     
-    create_txt(data_path, train_path, valid_path, test_path, split,args.question_lower, args.question_upper, 'train')
-    
-    create_vocabulary(vocab_path,
-                      [pjoin(args.source_dir, "question1_train.txt"),
-                       pjoin(args.source_dir, "question2_train.txt"),
-                      pjoin(args.source_dir, "question1_val.txt"),
-                      pjoin(args.source_dir, "question2_val.txt")])
-    vocab, rev_vocab = initialize_vocabulary(vocab_path)
+    if args.mode == 'train':
+        print('running in {} mode'.format(args.mode))
+        create_txt(data_path, train_path, valid_path, test_path, split,args.question_lower, args.question_upper, 'train')
 
-    process_glove(args, rev_vocab, args.source_dir + "/glove.trimmed.{}".format(args.glove_dim),
-                  random_init=args.random_init)
+        create_vocabulary(vocab_path,
+                          [pjoin(args.source_dir, "question1_train.txt"),
+                           pjoin(args.source_dir, "question2_train.txt"),
+                          pjoin(args.source_dir, "question1_val.txt"),
+                          pjoin(args.source_dir, "question2_val.txt")])
+        vocab, rev_vocab = initialize_vocabulary(vocab_path)
 
-    question1_train_ids_path = train_path + "/.ids.train.question1"
-    question2_train_ids_path = train_path + "/.ids.train.question2"
-    data_to_token_ids(train_path + "/question1_train.txt", question1_train_ids_path, vocab_path, tokenizer = tokenizer)
-    data_to_token_ids(train_path + "/question2_train.txt", question2_train_ids_path, vocab_path, tokenizer = tokenizer)
+        process_glove(args, rev_vocab, args.source_dir + "/glove.trimmed.{}".format(args.glove_dim),
+                      random_init=args.random_init)
 
-    question1_val_ids_path = valid_path + "/.ids.val.question1"
-    question2_val_ids_path = valid_path + "/.ids.val.question2"
-    data_to_token_ids(valid_path + "/question1_val.txt", question1_val_ids_path, vocab_path, tokenizer = tokenizer)
-    data_to_token_ids(valid_path + "/question2_val.txt", question2_val_ids_path, vocab_path, tokenizer = tokenizer)
+        question1_train_ids_path = train_path + "/.ids.train.question1"
+        question2_train_ids_path = train_path + "/.ids.train.question2"
+        data_to_token_ids(train_path + "/question1_train.txt", question1_train_ids_path, vocab_path, tokenizer = tokenizer)
+        data_to_token_ids(train_path + "/question2_train.txt", question2_train_ids_path, vocab_path, tokenizer = tokenizer)
+
+        question1_val_ids_path = valid_path + "/.ids.val.question1"
+        question2_val_ids_path = valid_path + "/.ids.val.question2"
+        data_to_token_ids(valid_path + "/question1_val.txt", question1_val_ids_path, vocab_path, tokenizer = tokenizer)
+        data_to_token_ids(valid_path + "/question2_val.txt", question2_val_ids_path, vocab_path, tokenizer = tokenizer)
     if args.mode == 'test':
+        print('running in {} mode'.format(args.mode))
         data_path = pjoin(args.data_dir, "test.csv")
         create_txt(data_path, train_path, valid_path, test_path, split,args.question_lower, args.question_upper, args.mode)
         question1_test_ids_path = test_path + "/.ids.test.question1"

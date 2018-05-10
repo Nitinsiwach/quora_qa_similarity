@@ -57,12 +57,6 @@ def get_device_name():
     return 'CPU' if tf.test.gpu_device_name() == '' else tf.test.gpu_device_name()
 
 def get_normalized_train_dir(train_dir):
-    """
-    Adds symlink to {train_dir} from /tmp/cs224n-squad-train to canonicalize the
-    file paths saved in the checkpoint. This allows the model to be reloaded even
-    if the location of the checkpoint files has moved, allowing usage with CodaLab.
-    This must be done on both train.py and qa_answer.py in order to work.
-    """
     global_train_dir = 'dir_node_wordvar'
     if os.path.exists(global_train_dir):
 #         os.unlink(global_train_dir) #forlinux
@@ -148,7 +142,6 @@ def main():
             tq2 = [[int(i) for i in j.replace("\n", "").split()] for j in tq2]
             prediction_dataset = [tq1, tq2, ta]
             predictions = qa.predict(sess, prediction_dataset)
-            accuracy, predictions = qa.evaluate_answer(sess, prediction_dataset, mode = 'test', log=True)
             print("accuracy on test set is {}".format(accuracy))
             with open("results_test.txt", 'w', encoding = 'utf-8') as f:
                 f.write(predictions)

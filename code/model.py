@@ -171,7 +171,7 @@ class QSystem(object):
         return predictions
         
 
-    def evaluate_answer(self, session, dataset,mode = 'train', log=False):
+    def evaluate_answer(self, session, dataset, log=False):
         """
         dataset: [q1, q2, a]
         naive accuracy measure
