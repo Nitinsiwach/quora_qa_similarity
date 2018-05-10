@@ -4,3 +4,4 @@ download
 log
 train
 dir_node_wordvar
+*.ipynb
