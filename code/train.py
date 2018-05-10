@@ -37,7 +37,7 @@ class _FLAGS():
         self.optimizer = "adam"
         self.vocab_path = "data/quora/vocab.dat"
         self.max_sent_len = 40
-        self.mode = 'train'
+        self.mode = 'test'
 FLAGS = _FLAGS()
 
 def initialize_model(session, model, train_dir):
@@ -132,15 +132,12 @@ def main():
             accuracy = qa.evaluate_answer(sess, dataset_train, log=True)
         if Flags.mode == 'test':
             with open("data/quora"+"/.ids.test.question1", encoding = 'utf8') as tq1, \
-                open("data/quora"+"/.ids.test.question2", encoding = 'utf8') as tq2, \
-                open("data/quora"+"/labels_test.txt", encoding = 'utf8') as ta:
+                open("data/quora"+"/.ids.test.question2", encoding = 'utf8') as tq2:
                     tq1 = tq1.readlines()
                     tq2 = tq2.readlines()
-                    ta = ta.readlines()    
-            ta = [int(i) for i in list(ta[0])]
             tq1 = [[int(i) for i in j.replace("\n", "").split()] for j in tq1]
             tq2 = [[int(i) for i in j.replace("\n", "").split()] for j in tq2]
-            prediction_dataset = [tq1, tq2, ta]
+            prediction_dataset = [tq1, tq2]
             predictions = qa.predict(sess, prediction_dataset)
             print("accuracy on test set is {}".format(accuracy))
             with open("results_test.txt", 'w', encoding = 'utf-8') as f:
