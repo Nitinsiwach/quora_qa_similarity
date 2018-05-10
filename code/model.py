@@ -149,8 +149,8 @@ class QSystem(object):
         self.q2 = tf.nn.embedding_lookup(self.pretrained_embeddings_vars, self.q2_id)
 
     
-    def predict(self, session, prediction_dataset):
-        input_feed = self.feed_dict(prediction_dataset)
+    def predict(self, session, prediction_dataset, mode = 'train'):
+        input_feed = self.feed_dict(prediction_dataset, mode)
         output = self.prediction
         
         predictions = session.run(output, input_feed)

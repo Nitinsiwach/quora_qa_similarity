@@ -138,8 +138,7 @@ def main():
             tq1 = [[int(i) for i in j.replace("\n", "").split()] for j in tq1]
             tq2 = [[int(i) for i in j.replace("\n", "").split()] for j in tq2]
             prediction_dataset = [tq1, tq2]
-            predictions = qa.predict(sess, prediction_dataset)
-            print("accuracy on test set is {}".format(accuracy))
+            predictions = qa.predict(sess, prediction_dataset, mode = 'test')
             with open("results_test.txt", 'w', encoding = 'utf-8') as f:
                 f.write(predictions)
 
