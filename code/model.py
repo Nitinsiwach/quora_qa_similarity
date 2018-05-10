@@ -148,20 +148,6 @@ class QSystem(object):
         self.q1 = tf.nn.embedding_lookup(self.pretrained_embeddings_vars, self.q1_id) #batch,q_max_len,embed_dim
         self.q2 = tf.nn.embedding_lookup(self.pretrained_embeddings_vars, self.q2_id)
 
-    def validate(self, session, valid_dataset):
-        """
-        Iterate through the validation dataset and determine what
-        the validation cost is.
-
-        :return:
-        """
-        valid_cost = 0
-
-        input_feed = self.feed_dict(valid_dataset)
-        output_feed = [self.loss]
-        valid_cost = session.run(output_feed, input_feed)
-        
-        return valid_cost
     
     def predict(self, session, prediction_dataset):
         input_feed = self.feed_dict(prediction_dataset)
@@ -242,10 +228,7 @@ class QSystem(object):
         """
         Implement main training loop
         :param session: it should be passed in from train.py
-               dataset: a representation of our data, in some implementations, you can
-                        pass in multiple components (arguments) of one dataset to this function.
-                        In this implimentation it is passed down as a list of train and val:
-                        [[train_q1, train_q2, train_a], [val_q1, val_q2, val_a]]
+               dataset:[[train_q1, train_q2, train_a], [val_q1, val_q2, val_a]]
                         
                train_dir: path to the directory where you save the model checkpoint
         :return: best_score
