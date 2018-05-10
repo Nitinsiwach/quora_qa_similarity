@@ -187,8 +187,8 @@ class QSystem(object):
         m_len = self.max_sent_len
         q1 = datalist[0]
         q2 = datalist[1]
-        q1 = [i[:70] if len(i) > m_len else i for i in q1]
-        q2 = [i[:70] if len(i) > m_len else i for i in q2]
+        q1 = [i[:self.max_sent_len] if len(i) > m_len else i for i in q1]
+        q2 = [i[:self.max_sent_len] if len(i) > m_len else i for i in q2]
         datalist = [q1, q2]
         padded = [[k + [0]*(m_len-len(k)) for k in j] for j in datalist]
         masks = [[[1 if t != 0 else 0 for t in k] for k in j] for j in padded]
